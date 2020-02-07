@@ -247,12 +247,102 @@ int shellExecuteInput(char **args)
   /** TASK 3 **/
 
   // 1. Check if args[0] is NULL. If it is, an empty command is entered, return 1
+  if (args[0] == NULL)
+  {
+    return 1;
+  }
   // 2. Otherwise, check if args[0] is in any of our builtin_commands, and that it is NOT cd, help, exit, or usage.
-  // 3. If conditions in (2) are satisfied, perform fork(). Check if fork() is successful.
-  // 4. For the child process, execute the appropriate functions depending on the command in args[0]. Pass char ** args to the function.
-  // 5. For the parent process, wait for the child process to complete and fetch the child's return value.
-  // 6. Return the child's return value to the caller of shellExecuteInput
-  // 7. If args[0] is not in builtin_command, print out an error message to tell the user that command doesn't exist and return 1
+  else
+  {
+    if (strcmp(args[0], builtin_commands[0]) == 0)
+    {
+      shellCD(args);
+    }
+    else if (strcmp(args[0], builtin_commands[1]) == 0)
+    {
+      shellHelp(args);
+    }
+    else if (strcmp(args[0], builtin_commands[2]) == 0)
+    {
+      shellExit(args);
+    }
+    else if (strcmp(args[0], builtin_commands[3]) == 0)
+    {
+      shellUsage(args);
+    }
+    else
+    {
+      // 3. If conditions in (2) are satisfied, perform fork(). Check if fork() is successful.
+      pid_t pid = fork();
+      int *stat_loc = malloc(sizeof(int));
+      int *return_value = malloc(sizeof(int));
+
+      if (pid == -1)
+      {
+        printf("fork failed\n");
+      }
+      else if (pid == 0)
+      {
+        printf("fork success\n");
+        // 4. For the child process, execute the appropriate functions depending on the command in args[0]. Pass char ** args to the function.
+        if (strcmp(args[0], builtin_commands[4]) == 0)
+        {
+          *return_value = shellDisplayFile(args);
+          exit(1);
+        }
+        else if (strcmp(args[0], builtin_commands[5]) == 0)
+        {
+          *return_value = shellCountLine(args);
+          exit(1);
+        }
+        else if (strcmp(args[0], builtin_commands[6]) == 0)
+        {
+          *return_value = shellListDir(args);
+          exit(1);
+        }
+        else if (strcmp(args[0], builtin_commands[7]) == 0)
+        {
+          *return_value = shellListDirAll(args);
+          exit(1);
+        }
+        else if (strcmp(args[0], builtin_commands[8]) == 0)
+        {
+          *return_value = shellFind(args);
+          *return_value = 10;
+          exit(1);
+        }
+        else if (strcmp(args[0], builtin_commands[9]) == 0)
+        {
+          *return_value = shellSummond(args);
+          exit(1);
+        }
+        else if (strcmp(args[0], builtin_commands[10]) == 0)
+        {
+          *return_value = shellCheckDaemon(args);
+          exit(1);
+        }
+        else
+        {
+          // 7. If args[0] is not in builtin_command, print out an error message to tell the user that command doesn't exist and return 1
+          printf("command does not exist\n");
+          return 1;
+        }
+      }
+      else if (pid > 0)
+      {
+        // 5. For the parent process, wait for the child process to complete and fetch the child's return value.
+        // 6. Return the child's return value to the caller of shellExecuteInput
+        printf("%i\n", *return_value);
+        if (waitpid(pid, stat_loc, WUNTRACED) == pid)
+        {
+          printf("%i\n", pid);
+          // printf("%i\n", waitpid(pid, stat_loc, WUNTRACED));
+          printf("%i\n", *return_value);
+        }
+        return return_value;
+      }
+    }
+  }
 
   return 1;
 }
@@ -346,5 +436,6 @@ int main()
   char **args = shellTokenizeInput(line);
   printf("The first token is %s \n", args[0]);
   printf("The second token is %s \n", args[1]);
+  shellExecuteInput(args);
   return 0;
 }
