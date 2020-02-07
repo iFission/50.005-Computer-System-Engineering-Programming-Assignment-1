@@ -266,12 +266,12 @@ char *shellReadLine(void)
   // read one line from stdin using getline()
   // 1. Allocate a memory space to contain the string of input from stdin using malloc. Malloc should return a char* that persists even after this function terminates.
   char *buffer = malloc(sizeof(char) * 1);
-  int size = 256;
+  int shell_buffersize = SHELL_BUFFERSIZE;
   // 2. Check that the char* returned by malloc is not NULL
   if (buffer != NULL)
   {
     // 3. Fetch an entire line from input stream stdin using getline() function. getline() will store user input onto the memory location allocated in (1)
-    getline(&buffer, &size, stdin);
+    getline(&buffer, &shell_buffersize, stdin);
     return buffer;
   }
   // 4. Return the char*
@@ -292,7 +292,7 @@ char **shellTokenizeInput(char *line)
   // // 3. Tokenize the *line using strtok() function
   // // 4. Return the char **
 
-  char *shell_input_delim = " \t\r\n\a";
+  char *shell_input_delim = SHELL_INPUT_DELIM;
   char **token_positions = malloc(sizeof(char *) * 8);
   char *token = strtok(line, shell_input_delim);
   int index = 0;
