@@ -14,6 +14,12 @@ int shellFind(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellFind if execvp fails to allow loop to continue
+  int return_value = execvp("shellPrograms/find", args);
+  if (return_value == 1)
+  {
+    printf("find fail to execute successfully.\n");
+    return 1;
+  }
 
   return 1;
 }
@@ -31,6 +37,12 @@ int shellDisplayFile(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDisplayFile if execvp fails to allow loop to continue
+  int return_value = execvp("shellPrograms/display", args);
+  if (return_value == 1)
+  {
+    printf("find fail to execute successfully.\n");
+    return 1;
+  }
 
   return 1;
 }
@@ -49,6 +61,12 @@ int shellListDirAll(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDirAll if execvp fails to allow loop to continue
+  int return_value = execvp("shellPrograms/listdirall", args);
+  if (return_value == 1)
+  {
+    printf("listdirall fail to execute successfully.\n");
+    return 1;
+  }
 
   return 1;
 }
@@ -66,6 +84,12 @@ int shellListDir(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDir
+  int return_value = execvp("shellPrograms/listdir", args);
+  if (return_value == 1)
+  {
+    printf("listdir fail to execute successfully.\n");
+    return 1;
+  }
 
   return 1;
 }
@@ -84,6 +108,12 @@ int shellCountLine(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCountLine if execvp fails to allow loop to continue
+  int return_value = execvp("shellPrograms/countline", args);
+  if (return_value == 1)
+  {
+    printf("countline fail to execute successfully.\n");
+    return 1;
+  }
 
   return 1;
 }
@@ -101,6 +131,12 @@ int shellSummond(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDaemonize if execvp fails to allow loop to continue
+  int return_value = execvp("shellPrograms/summond", args);
+  if (return_value == 1)
+  {
+    printf("summond fail to execute successfully.\n");
+    return 1;
+  }
 
   return 1;
 }
@@ -308,7 +344,6 @@ int shellExecuteInput(char **args)
         else if (strcmp(args[0], builtin_commands[8]) == 0)
         {
           *return_value = shellFind(args);
-          *return_value = 10;
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[9]) == 0)
@@ -432,6 +467,7 @@ int main()
 {
   printf("Shell Run successful. Running now: \n");
   char *line = shellReadLine();
+  // char *line = "find file\n";
   printf("The fetched line is : %s \n", line);
   char **args = shellTokenizeInput(line);
   printf("The first token is %s \n", args[0]);
