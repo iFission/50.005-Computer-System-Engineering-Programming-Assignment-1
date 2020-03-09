@@ -15,7 +15,7 @@ int shellFind(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellFind if execvp fails to allow loop to continue
   int return_value = execvp("shellPrograms/find", args);
-  if (return_value == 1)
+  if (return_value == -1)
   {
     printf("find fail to execute successfully.\n");
     return 1;
@@ -38,7 +38,7 @@ int shellDisplayFile(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDisplayFile if execvp fails to allow loop to continue
   int return_value = execvp("shellPrograms/display", args);
-  if (return_value == 1)
+  if (return_value == -1)
   {
     printf("find fail to execute successfully.\n");
     return 1;
@@ -62,7 +62,7 @@ int shellListDirAll(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDirAll if execvp fails to allow loop to continue
   int return_value = execvp("shellPrograms/listdirall", args);
-  if (return_value == 1)
+  if (return_value == -1)
   {
     printf("listdirall fail to execute successfully.\n");
     return 1;
@@ -85,7 +85,7 @@ int shellListDir(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDir
   int return_value = execvp("shellPrograms/listdir", args);
-  if (return_value == 1)
+  if (return_value == -1)
   {
     printf("listdir fail to execute successfully.\n");
     return 1;
@@ -109,7 +109,7 @@ int shellCountLine(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCountLine if execvp fails to allow loop to continue
   int return_value = execvp("shellPrograms/countline", args);
-  if (return_value == 1)
+  if (return_value == -1)
   {
     printf("countline fail to execute successfully.\n");
     return 1;
@@ -132,7 +132,7 @@ int shellSummond(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDaemonize if execvp fails to allow loop to continue
   int return_value = execvp("shellPrograms/summond", args);
-  if (return_value == 1)
+  if (return_value == -1)
   {
     printf("summond fail to execute successfully.\n");
     return 1;
