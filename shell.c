@@ -85,11 +85,13 @@ int shellListDir(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDir
   int return_value = execvp("shellPrograms/listdir", args);
+  printf("BINARY: printing return value in binary %i\n", return_value);
   if (return_value == -1)
   {
     printf("listdir fail to execute successfully.\n");
     return 1;
   }
+  printf("printing return value %i\n", return_value);
 
   return 1;
 }
@@ -311,7 +313,7 @@ int shellExecuteInput(char **args)
       // 3. If conditions in (2) are satisfied, perform fork(). Check if fork() is successful.
       pid_t pid = fork();
       int *stat_loc = malloc(sizeof(int));
-      int *return_value = malloc(sizeof(int));
+      int return_value = 0;
 
       if (pid == -1)
       {
@@ -323,58 +325,59 @@ int shellExecuteInput(char **args)
         // 4. For the child process, execute the appropriate functions depending on the command in args[0]. Pass char ** args to the function.
         if (strcmp(args[0], builtin_commands[4]) == 0)
         {
-          *return_value = shellDisplayFile(args);
+          return_value = shellDisplayFile(args);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[5]) == 0)
         {
-          *return_value = shellCountLine(args);
+          return_value = shellCountLine(args);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[6]) == 0)
         {
-          *return_value = shellListDir(args);
+          // printf("before dir printing return value %i\n", return_value);
+          return_value = shellListDir(args);
+          // printf("after dir printing return value %i\n", return_value);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[7]) == 0)
         {
-          *return_value = shellListDirAll(args);
+          return_value = shellListDirAll(args);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[8]) == 0)
         {
-          *return_value = shellFind(args);
+          return_value = shellFind(args);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[9]) == 0)
         {
-          *return_value = shellSummond(args);
+          return_value = shellSummond(args);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[10]) == 0)
         {
-          *return_value = shellCheckDaemon(args);
+          return_value = shellCheckDaemon(args);
           exit(1);
         }
         else
         {
           // 7. If args[0] is not in builtin_command, print out an error message to tell the user that command doesn't exist and return 1
           printf("command does not exist\n");
-          return 1;
         }
       }
       else if (pid > 0)
       {
         // 5. For the parent process, wait for the child process to complete and fetch the child's return value.
         // 6. Return the child's return value to the caller of shellExecuteInput
-        printf("%i\n", *return_value);
+        printf("%i\n", return_value);
         if (waitpid(pid, stat_loc, WUNTRACED) == pid)
         {
-          printf("%i\n", pid);
+          printf("pid is %i\n", pid);
+          printf("printing return value %i\n", return_value);
           // printf("%i\n", waitpid(pid, stat_loc, WUNTRACED));
-          printf("%i\n", *return_value);
         }
-        return *return_value;
+        return 1;
       }
     }
   }
@@ -463,7 +466,10 @@ void shellLoop(void)
   // 9. check return value of shellExecuteInput. If 1, continue the loop (point 1) again and prompt for another input. Else, exit shell.
   while (1)
   {
+    printf("return value is %i\n", status);
+    fflush(stdout);
     printf("CSEShell> ");
+    fflush(stdin);
     line = shellReadLine();
     printf("The fetched line is : %s \n", line);
     args = shellTokenizeInput(line);
@@ -473,10 +479,12 @@ void shellLoop(void)
     free(line);
     free(args);
 
-    // if (status != 1)
-    // {
-    //   break;
-    // }
+    printf("return value is %i\n", status);
+
+    if (status != 1)
+    {
+      break;
+    }
   }
 }
 
