@@ -301,19 +301,19 @@ int shellExecuteInput(char **args)
   {
     if (strcmp(args[0], builtin_commands[0]) == 0)
     {
-      shellCD(args);
+      return shellCD(args);
     }
     else if (strcmp(args[0], builtin_commands[1]) == 0)
     {
-      shellHelp(args);
+      return shellHelp(args);
     }
     else if (strcmp(args[0], builtin_commands[2]) == 0)
     {
-      shellExit(args);
+      return shellExit(args);
     }
     else if (strcmp(args[0], builtin_commands[3]) == 0)
     {
-      shellUsage(args);
+      return shellUsage(args);
     }
     else
     {
