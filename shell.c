@@ -475,7 +475,9 @@ void shellLoop(void)
   {
     printf("return value is %i\n", status);
     fflush(stdout);
+    fflush(stdin);
     printf("CSEShell> ");
+    fflush(stdout);
     fflush(stdin);
     line = shellReadLine();
     printf("The fetched line is : %s \n", line);
