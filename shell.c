@@ -158,6 +158,13 @@ int shellCheckDaemon(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCheckDaemon if execvp fails to allow loop to continue
 
+  int return_value = execvp("shellPrograms/checkdaemon", args);
+  if (return_value == -1)
+  {
+    printf("summond fail to execute successfully.\n");
+    return 1;
+  }
+
   return 1;
 }
 
