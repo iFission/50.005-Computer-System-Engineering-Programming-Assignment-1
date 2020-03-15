@@ -367,9 +367,7 @@ int shellExecuteInput(char **args)
         }
         else if (strcmp(args[0], builtin_commands[6]) == 0)
         {
-          // printf("before dir printing return value %i\n", return_value);
           return_value = shellListDir(args);
-          // printf("after dir printing return value %i\n", return_value);
           exit(1);
         }
         else if (strcmp(args[0], builtin_commands[7]) == 0)
@@ -407,7 +405,6 @@ int shellExecuteInput(char **args)
         {
           printf("pid is %i\n", pid);
           printf("printing return value %i\n", return_value);
-          // printf("%i\n", waitpid(pid, stat_loc, WUNTRACED));
         }
         return 1;
       }
@@ -518,7 +515,6 @@ void shellLoop(void)
 
   while (1)
   {
-    printf("return value is %i\n", status);
     fflush(stdout);
     fflush(stdin);
     printf("CSEShell> ");
@@ -532,8 +528,6 @@ void shellLoop(void)
     status = shellExecuteInput(args);
     free(line);
     free(args);
-
-    printf("return value is %i\n", status);
 
     if (status != 1)
     {
