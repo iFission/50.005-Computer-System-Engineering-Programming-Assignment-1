@@ -1,5 +1,8 @@
 #include "shell.h"
 
+char cwd[PATH_MAX];
+char full_binary_path[PATH_MAX];
+
 /*
  List all files matching the name in args[1] under current directory and subdirectories
 */
@@ -14,7 +17,10 @@ int shellFind(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellFind if execvp fails to allow loop to continue
-  int return_value = execvp("shellPrograms/find", args);
+  char *binary_path = "shellPrograms/find";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   if (return_value == -1)
   {
     printf("find fail to execute successfully.\n");
@@ -37,7 +43,10 @@ int shellDisplayFile(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDisplayFile if execvp fails to allow loop to continue
-  int return_value = execvp("shellPrograms/display", args);
+  char *binary_path = "shellPrograms/display";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   if (return_value == -1)
   {
     printf("find fail to execute successfully.\n");
@@ -61,7 +70,10 @@ int shellListDirAll(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDirAll if execvp fails to allow loop to continue
-  int return_value = execvp("shellPrograms/listdirall", args);
+  char *binary_path = "shellPrograms/listdirall";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   if (return_value == -1)
   {
     printf("listdirall fail to execute successfully.\n");
@@ -84,7 +96,11 @@ int shellListDir(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellListDir
-  int return_value = execvp("shellPrograms/listdir", args);
+
+  char *binary_path = "shellPrograms/listdir";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   printf("BINARY: printing return value in binary %i\n", return_value);
   if (return_value == -1)
   {
@@ -110,7 +126,10 @@ int shellCountLine(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCountLine if execvp fails to allow loop to continue
-  int return_value = execvp("shellPrograms/countline", args);
+  char *binary_path = "shellPrograms/countline";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   if (return_value == -1)
   {
     printf("countline fail to execute successfully.\n");
@@ -133,7 +152,10 @@ int shellSummond(char **args)
   // 3. A successful execvp never returns, while a failed execvp returns -1
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellDaemonize if execvp fails to allow loop to continue
-  int return_value = execvp("shellPrograms/summond", args);
+  char *binary_path = "shellPrograms/summond";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   if (return_value == -1)
   {
     printf("summond fail to execute successfully.\n");
@@ -158,7 +180,10 @@ int shellCheckDaemon(char **args)
   // 4. Print some kind of error message if it returns -1
   // 5. return 1 to the caller of shellCheckDaemon if execvp fails to allow loop to continue
 
-  int return_value = execvp("shellPrograms/checkdaemon", args);
+  char *binary_path = "shellPrograms/checkdaemon";
+  snprintf(full_binary_path, PATH_MAX, "%s/%s", cwd, binary_path);
+
+  int return_value = execvp(full_binary_path, args);
   if (return_value == -1)
   {
     printf("summond fail to execute successfully.\n");
@@ -478,6 +503,19 @@ void shellLoop(void)
   // 7. free memory location containing the strings of characters
   // 8. free memory location containing char* to the first letter of each word in the input string
   // 9. check return value of shellExecuteInput. If 1, continue the loop (point 1) again and prompt for another input. Else, exit shell.
+
+  // use getcwd to construct path of execvp binaries in shellPrograms
+  // store the cwd as a string first
+  // then concatonate with shellPrograms/binary later
+  if (getcwd(cwd, sizeof(cwd)) != NULL)
+  {
+    printf("Current working dir: %s\n", cwd);
+  }
+  else
+  {
+    perror("getcwd() error");
+  }
+
   while (1)
   {
     printf("return value is %i\n", status);
