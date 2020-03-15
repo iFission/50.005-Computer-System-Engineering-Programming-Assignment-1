@@ -401,7 +401,7 @@ char *shellReadLine(void)
   // read one line from stdin using getline()
   // 1. Allocate a memory space to contain the string of input from stdin using malloc. Malloc should return a char* that persists even after this function terminates.
   char *buffer = malloc(sizeof(char) * 1);
-  int shell_buffersize = SHELL_BUFFERSIZE;
+  size_t shell_buffersize = SHELL_BUFFERSIZE;
   // 2. Check that the char* returned by malloc is not NULL
   if (buffer != NULL)
   {
@@ -443,6 +443,13 @@ char **shellTokenizeInput(char *line)
     //continue finding the next token
   }
   token_positions[index] = NULL; //dont forget to NULL terminate.
+
+  printf("length of the commands is %i\n", index - 1);
+
+  for (int i = 0; i < index - 1; i++)
+  {
+    printf("token %i is : %s, it is at address %0x \n", i, token_positions[i], token_positions[i]);
+  }
 
   return token_positions;
 }
