@@ -422,7 +422,7 @@ char *shellReadLine(void)
   /** TASK 1 **/
   // read one line from stdin using getline()
   // 1. Allocate a memory space to contain the string of input from stdin using malloc. Malloc should return a char* that persists even after this function terminates.
-  char *buffer = malloc(sizeof(char) * 1);
+  char *buffer = malloc(sizeof(char) * SHELL_BUFFERSIZE);
   size_t shell_buffersize = SHELL_BUFFERSIZE;
   // 2. Check that the char* returned by malloc is not NULL
   if (buffer != NULL)
@@ -450,7 +450,7 @@ char **shellTokenizeInput(char *line)
   // // 4. Return the char **
 
   char *shell_input_delim = SHELL_INPUT_DELIM;
-  char **token_positions = malloc(sizeof(char *) * 8);
+  char **token_positions = malloc(sizeof(char *) * SHELL_BUFFERSIZE);
   char *token = strtok(line, shell_input_delim);
   int index = 0;
   token_positions[index] = token;

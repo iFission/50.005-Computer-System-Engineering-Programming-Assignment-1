@@ -16,6 +16,8 @@ int shellCountLine_code(char **args)
     FILE *fp = fopen(args[1], "r");
     printf("args[0] %s\n", args[0]);
     printf("args[1] %s\n", args[1]);
+
+    printf("FP is %d \n", fp);
     // 2. Check if file exists by ensuring that the FILE* fp returned by fopen() is not NULL
     if (fp != NULL)
     {
@@ -33,7 +35,7 @@ int shellCountLine_code(char **args)
     // 6. Close the FILE*
     printf("this is closing...\n");
     fclose(fp); // 7. Print out how many lines are there in this particular filename
-    // printf("count is %i\n", count);
+    printf("count is %i\n", count);
     // 8. Return 1, to exit program
 
     return 1;

@@ -1,0 +1,59 @@
+tokenize
+create new process
+
+bugs
+CSEShell> display output.txt
+The fetched line is : display output.txt
+ 
+The first token is display 
+The second token is output.t�P� 
+0
+fork success
+shellDisplayFile is called!
+CSEShell: File doesn't exist.
+pid is 88005
+printing return value 0
+return value is 1
+return value is 1
+CSEShell> display output.txt
+The fetched line is : display output.txt
+ 
+The first token is display 
+The second token is output.t 
+0
+fork success
+shellDisplayFile is called!
+CSEShell: File doesn't exist.
+pid is 88054
+printing return value 0
+return value is 1
+return value is 1
+CSEShell> display output.txt
+The fetched line is : display output.txt
+ 
+The first token is display 
+The second token is output.t�P� 
+0
+fork success
+shellDisplayFile is called!
+CSEShell: File doesn't exist.
+pid is 88114
+printing return value 0
+return value is 1
+return value is 1
+CSEShell> display output.txt
+The fetched line is : display output.txt
+ 
+The first token is display 
+The second token is output.txt 
+0
+fork success
+shellDisplayFile is called!
+  501 99748     1   0  9:27pm ??         0:00.00 summond          ALEX             99747      0    0 S      ?? 
+  501 99758     1   0  9:27pm ??         0:00.00 summond          ALEX             99757      0    0 S      ?? 
+  501 99772     1   0  9:27pm ??         0:00.00 summond          ALEX             99771      0    0 S      ?? 
+
+pid is 88171
+printing return value 0
+return value is 1
+return value is 1
